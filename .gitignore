@@ -1,0 +1,13 @@
+# Binaries
+**/bin/
+bin-int/
+
+# premake binary
+*.exe
+
+# Visual Studio files and folder
+.vs/
+**.sln
+**.vcxproj
+**.vcxproj.filters
+**.vcxproj.user
