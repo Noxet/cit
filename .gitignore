@@ -5,6 +5,10 @@ bin-int/
 # premake binary
 *.exe
 
+# static libs
+*.lib
+*.pdb
+
 # Visual Studio files and folder
 .vs/
 **.sln
