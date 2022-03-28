@@ -50,11 +50,21 @@ project "cit_tests"
     location "tests"
     kind "ConsoleApp"
 
+    staticruntime "on"  -- sets the /MT flag
+    runtime "Debug"     -- sets /MTd
+
+    pchheader "citpch.h"
+	--pchsource "src/testpch.cpp" -- This will automatically be platforms other than MSVC
+
     files
     {
         "tests/**.h",
         "tests/**.cpp",
+        "src/**.h",
+        "src/**.cpp",
     }
+
+    excludes "src/cit.cpp"
 
     includedirs
     {
@@ -62,24 +72,24 @@ project "cit_tests"
         googletestRoot .. "/include",
     }
 
-    links { "cit", "googletest" }
+    links { "googletest" }
 
 
-project "googletest"
-    location (googletestRoot .. "/src")
-    kind "StaticLib"
-
-    targetdir (googletestRoot .. "/build")
-    objdir (googletestRoot .. "/build")
-
-    files
-    {
-        googletestRoot .. "/src/**.h",
-        googletestRoot .. "/src/**.cc",
-    }
-
-    includedirs
-    {
-        googletestRoot,
-        googletestRoot .. "/include",
-    }
+--project "googletest"
+--    location (googletestRoot .. "/src")
+--    kind "StaticLib"
+--
+--    targetdir (googletestRoot .. "/build")
+--    objdir (googletestRoot .. "/build")
+--
+--    files
+--    {
+--        googletestRoot .. "/src/**.h",
+--        googletestRoot .. "/src/**.cc",
+--    }
+--
+--    includedirs
+--    {
+--        googletestRoot,
+--        googletestRoot .. "/include",
+--    }
