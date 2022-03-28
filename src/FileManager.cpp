@@ -41,6 +41,13 @@ namespace cit
 		return fs::is_empty(path);
 	}
 
+	string FileManager::getParentDir(const string &path)
+	{
+		string parent = joinPaths({ path, ".." });
+		fs::path absPath = fs::absolute(parent);
+		return absPath.string();
+	}
+
 	string FileManager::joinPaths(const vector<string> &paths)
 	{
 		fs::path locPath;
@@ -50,6 +57,7 @@ namespace cit
 		}
 		return locPath.string();
 	}
+
 	string FileManager::normalizeString(const string &str)
 	{
 		fs::path normStr{ str };

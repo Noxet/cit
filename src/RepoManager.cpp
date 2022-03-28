@@ -23,8 +23,8 @@ namespace cit
 		// Create necessary directories
 		FileManager::create({ repo.getGitDir(), "branches" }, true);
 		FileManager::create({ repo.getGitDir(), "objects" }, true);
-		FileManager::create({ repo.getGitDir(), "refs", "tags"}, true);
-		FileManager::create({ repo.getGitDir(), "refs", "heads"}, true);
+		FileManager::create({ repo.getGitDir(), "refs", "tags" }, true);
+		FileManager::create({ repo.getGitDir(), "refs", "heads" }, true);
 
 		// Create necessary files with content
 		FileManager::create({ repo.getGitDir(), "description" }, false, "Unnamed repo, please edit");
@@ -32,6 +32,12 @@ namespace cit
 		string config = "[core]\nrepositoryformatversion = 0\nfilemode = false\nbare = false";
 		FileManager::create({ repo.getGitDir(), "config" }, false, config);
 
-		m_repos.push_back(make_shared<Repository>(repo));
+		m_repo = make_shared<Repository>(repo);
+	}
+
+	shared_ptr<Repository> RepoManager::findRepo(string path, bool required)
+	{
+		if (FileManager::isDir(path));
+		return m_repo;
 	}
 }

@@ -13,6 +13,7 @@ namespace cit
 		static bool isDir(const string &path);
 		static bool isFile(const string &path);
 		static bool isEmpty(const string &path);
+		static string getParentDir(const string &path);
 
 		static string joinPaths(const vector<string> &paths);
 		static string normalizeString(const string &str);
