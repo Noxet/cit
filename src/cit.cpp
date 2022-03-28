@@ -33,7 +33,14 @@ int main(int argc, char *argv[])
 	}
 	else if (command == "status")
 	{
-		auto repo = rm.findRepo();
-		cout << "work tree: " << repo->getWorkTree() << "\tgit dir: " << repo->getGitDir() << endl;
+		try
+		{
+			auto repo = rm.findRepo();
+			cout << "work tree: " << repo->getWorkTree() << "\tgit dir: " << repo->getGitDir() << endl;
+		} catch (const std::exception &e)
+		{
+			cout << "Error: " << e.what() << endl;
+		}
+		
 	}
 }

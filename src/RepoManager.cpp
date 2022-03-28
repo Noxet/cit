@@ -54,7 +54,12 @@ namespace cit
 			prevDir = currentDir;
 			currentDir = FileManager::getParentDir(currentDir);
 		} while (prevDir != currentDir);
-		
+
+		if (m_repo == nullptr && required == true)
+		{
+			throw std::runtime_error("Git repository can not be found");
+		}
+
 		return m_repo;
 	}
 }
