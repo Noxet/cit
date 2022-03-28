@@ -37,7 +37,24 @@ namespace cit
 
 	shared_ptr<Repository> RepoManager::findRepo(string path, bool required)
 	{
-		if (FileManager::isDir(path));
+		string currentDir{ path };
+		string prevDir{};
+		m_repo = nullptr;
+
+		do
+		{
+			string gitRepo = FileManager::joinPaths({ currentDir, ".git" });
+			if (FileManager::isDir(gitRepo))
+			{
+				// we found a git repo somewhere in the current path
+				Repository repo{ currentDir };
+				m_repo = make_shared<Repository>(repo);
+				break;
+			}
+			prevDir = currentDir;
+			currentDir = FileManager::getParentDir(currentDir);
+		} while (prevDir != currentDir);
+		
 		return m_repo;
 	}
 }

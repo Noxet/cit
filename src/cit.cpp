@@ -4,6 +4,7 @@
 #include "RepoManager.h"
 #include "Repository.h"
 
+using namespace cit;
 
 int main(int argc, char *argv[])
 {
@@ -13,9 +14,9 @@ int main(int argc, char *argv[])
 		return 1;
 	}
 
-	cit::FileManager::create({ "test", "windows", "strings" });
+	FileManager::create({ "test", "windows", "strings" });
 	//cit::Repository repo(".");
-	cit::RepoManager rm;
+	RepoManager rm;
 
 	const string command = argv[1];
 	if (command == "init")
@@ -29,5 +30,10 @@ int main(int argc, char *argv[])
 		const string initPath = argv[2];
 
 		rm.create(initPath);
+	}
+	else if (command == "status")
+	{
+		auto repo = rm.findRepo();
+		cout << "work tree: " << repo->getWorkTree() << "\tgit dir: " << repo->getGitDir() << endl;
 	}
 }
