@@ -5,6 +5,12 @@ workspace "cit"
     language "C++"
     cppdialect "C++20"
 
+    -- disable compiler extensions
+    conformancemode "Yes" -- MSVC
+    -- Linux GNU make
+    filter { "system:linux", "action:gmake" }
+        buildoptions { "-pedantic-errors" }
+
     filter "configurations:Debug"
         -- Add preprocessor definition DEBUG to compiler
         defines {"DEBUG"}
@@ -18,6 +24,9 @@ workspace "cit"
 
     filter "system:windows"
         defines {"WINDOWS"}
+
+
+googletestRoot = "vendor/googletest/googletest"
 
 
 project "cit"
@@ -36,7 +45,41 @@ project "cit"
         "src/**.cpp",
     }
 
+
+project "cit_tests"
+    location "tests"
+    kind "ConsoleApp"
+
+    files
+    {
+        "tests/**.h",
+        "tests/**.cpp",
+    }
+
     includedirs
     {
+        "src",
+        googletestRoot .. "/include",
+    }
 
+    links { "cit", "googletest" }
+
+
+project "googletest"
+    location (googletestRoot .. "/src")
+    kind "StaticLib"
+
+    targetdir (googletestRoot .. "/build")
+    objdir (googletestRoot .. "/build")
+
+    files
+    {
+        googletestRoot .. "/src/**.h",
+        googletestRoot .. "/src/**.cc",
+    }
+
+    includedirs
+    {
+        googletestRoot,
+        googletestRoot .. "/include",
     }
