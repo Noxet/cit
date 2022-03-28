@@ -50,6 +50,9 @@ project "cit_tests"
     location "tests"
     kind "ConsoleApp"
 
+    targetdir ("bin/%{prj.name}")
+    objdir ("bin-int/%{prj.name}")
+
     staticruntime "on"  -- sets the /MT flag
     runtime "Debug"     -- sets /MTd
 
