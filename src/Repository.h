@@ -4,9 +4,6 @@
 
 namespace cit
 {
-	using std::string;
-
-
 	class Repository
 	{
 	public:

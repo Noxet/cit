@@ -6,7 +6,7 @@ namespace cit
 	class RepoManager
 	{
 	private:
-		Repository m_repo;
+		vector<shared_ptr<Repository>> m_repos;
 
 	public:
 		void create(string path);
