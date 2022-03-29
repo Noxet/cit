@@ -45,6 +45,17 @@ project "cit"
         "src/**.cpp",
     }
 
+    includedirs
+    {
+        "vendor/zlib-1.2.12",
+        "vendor/zlib-1.2.12/build",
+    }
+
+    links
+    {
+        "zlibstaticd"
+    }
+
 
 project "cit_tests"
     location "tests"
