@@ -4,6 +4,9 @@
 
 #include <filesystem>
 #include <fstream>
+#include <sstream>
+
+#include <zlib.h>
 
 namespace cit
 {
@@ -24,6 +27,31 @@ namespace cit
 			os << data << endl;
 			os.close();
 		}
+	}
+
+	string FileManager::readObject(const string &filename)
+	{
+		const gzFile file = gzopen(filename.c_str(), "rb");
+		if (file == nullptr)
+		{
+			stringstream ss;
+			ss << "Could not open zip-file: " << filename;
+			throw std::runtime_error(ss.str());
+		}
+
+		string data{};
+		char buf[256];
+		int numRead{ 0 };
+
+		while ((numRead = gzread(file, buf, sizeof(buf))) > 0)
+		{
+			// append only the "numRead" characters
+			data.append(buf, numRead);
+		}
+
+		gzclose(file);
+
+		return data;
 	}
 
 	bool FileManager::isDir(const string &path)

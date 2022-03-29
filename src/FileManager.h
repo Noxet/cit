@@ -9,6 +9,7 @@ namespace cit
 	{
 	public:
 		static void create(const vector<string> &path, const bool isDir = false, const string &data = "");
+		static string readObject(const string &filename);
 
 		static bool isDir(const string &path);
 		static bool isFile(const string &path);

@@ -12,5 +12,6 @@ using std::string;
 using std::vector;
 using std::ofstream;
 using std::ifstream;
+using std::stringstream;
 using std::shared_ptr;
 using std::make_shared;

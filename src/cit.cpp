@@ -4,6 +4,8 @@
 #include "RepoManager.h"
 #include "Repository.h"
 
+#include "zlib.h"
+
 using namespace cit;
 
 int main(int argc, char *argv[])
@@ -41,6 +43,8 @@ int main(int argc, char *argv[])
 		{
 			cout << "Error: " << e.what() << endl;
 		}
-		
+
+		string data = FileManager::readObject(argv[2]);
+		cout << "obj data: " << data << endl;
 	}
 }
