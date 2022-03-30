@@ -36,6 +36,10 @@ namespace cit
 		if (objType == "tree")		return make_shared<GitTree>(repo, objData);
 		if (objType == "tag")		return make_shared<GitTag>(repo, objData);
 		if (objType == "blob")		return make_shared<GitBlob>(repo, objData);
+
+		// did not match any of above
+		const string errMsg = format("Unknown type {} for object {}", objType, hash);
+		throw std::runtime_error(errMsg);
 	}
 	
 }
