@@ -1,6 +1,6 @@
 [submodule "vendor/googletest"]
 	path = vendor/googletest
 	url = https://github.com/google/googletest.git
-[submodule "vendor/argparse"]
-	path = vendor/argparse
-	url = https://github.com/morrisfranken/argparse.git
+[submodule "vendor/args"]
+	path = vendor/args
+	url = https://github.com/Taywee/args.git
