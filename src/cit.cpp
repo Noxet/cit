@@ -1,6 +1,7 @@
 #include "citpch.h"
 
 #include "FileManager.h"
+#include "ObjectManager.h"
 #include "RepoManager.h"
 #include "Repository.h"
 
@@ -39,12 +40,15 @@ int main(int argc, char *argv[])
 		{
 			auto repo = rm.findRepo();
 			cout << "work tree: " << repo->getWorkTree() << "\tgit dir: " << repo->getGitDir() << endl;
+
+			string hash = argv[2];
+			auto obj = ObjectManager::readObject(repo, hash);
+			cout << "obj data: " << obj->serialize() << endl;
 		} catch (const std::exception &e)
 		{
 			cout << "Error: " << e.what() << endl;
 		}
 
-		string data = FileManager::readObject(argv[2]);
-		cout << "obj data: " << data << endl;
+		
 	}
 }

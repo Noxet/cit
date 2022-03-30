@@ -3,7 +3,7 @@
 
 namespace cit
 {
-	GitObject::GitObject(shared_ptr<Repository> repo) : m_repo(repo)
+	GitObject::GitObject(shared_ptr<Repository> repo, const string &data) : m_repo(repo), m_data(data)
 	{
 	}
 }
