@@ -49,6 +49,7 @@ project "cit"
     {
         "vendor/zlib-1.2.12",
         "vendor/zlib-1.2.12/build",
+        "vendor/args",
     }
 
     links
