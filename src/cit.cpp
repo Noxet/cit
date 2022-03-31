@@ -5,9 +5,10 @@
 #include "RepoManager.h"
 #include "Repository.h"
 
-#include "zlib.h"
+#include "args.hxx"
 
 using namespace cit;
+
 
 int main(int argc, char *argv[])
 {
@@ -20,6 +21,24 @@ int main(int argc, char *argv[])
 	FileManager::create({ "test", "windows", "strings" });
 	//cit::Repository repo(".");
 	RepoManager rm;
+
+
+	args::ArgumentParser parser("This is a test", "after options");
+	args::Flag foo(parser, "foo", "The foo flag", { 'f', "foo" });
+
+	try
+	{
+		parser.ParseCLI(argc, argv);
+	}
+	catch (const args::ParseError &e)
+	{
+		cout << "OH NO" << endl;
+		cout << e.what() << endl;
+	}
+
+	if (foo) cout << "GOT FOO" << endl;
+
+
 
 	const string command = argv[1];
 	if (command == "init")
@@ -40,15 +59,16 @@ int main(int argc, char *argv[])
 		{
 			auto repo = rm.findRepo();
 			cout << "work tree: " << repo->getWorkTree() << "\tgit dir: " << repo->getGitDir() << endl;
-
-			string hash = argv[2];
-			auto obj = ObjectManager::readObject(repo, hash);
-			cout << "obj data: " << obj->serialize() << endl;
 		} catch (const std::exception &e)
 		{
 			cout << "Error: " << e.what() << endl;
 		}
-
-		
+	}
+	else if (command == "cat-file")
+	{
+		auto repo = rm.findRepo();
+		string object = argv[2];
+		auto obj = ObjectManager::readObject(repo, object);
+		cout << "obj data: " << obj->serialize() << endl;
 	}
 }
