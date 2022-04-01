@@ -1,43 +1,37 @@
 #include "citpch.h"
 
+#include "CitCommand.h"
 #include "FileManager.h"
 #include "ObjectManager.h"
 #include "RepoManager.h"
 #include "Repository.h"
-
-#include "args.hxx"
 
 using namespace cit;
 
 
 int main(int argc, char *argv[])
 {
-	if (argc < 2)
-	{
-		cout << "Usage: cit <option>" << endl;
-		return 1;
-	}
-
-	FileManager::create({ "test", "windows", "strings" });
-	//cit::Repository repo(".");
 	RepoManager rm;
-
-
-	args::ArgumentParser parser("This is a test", "after options");
-	args::Flag foo(parser, "foo", "The foo flag", { 'f', "foo" });
 
 	try
 	{
-		parser.ParseCLI(argc, argv);
+		CitCommand::parser.ParseCLI(argc, argv);
 	}
-	catch (const args::ParseError &e)
+	catch (args::Help)
 	{
-		cout << "OH NO" << endl;
-		cout << e.what() << endl;
+		cout << CitCommand::parser;
+	}
+	catch (args::Error &e)
+	{
+		std::cerr << e.what() << endl << CitCommand::parser;
+		return 1;
 	}
 
-	if (foo) cout << "GOT FOO" << endl;
-
+	if (CitCommand::status)
+	{
+		const auto repo = rm.findRepo();
+		cout << "work tree: " << repo->getWorkTree() << "\tgit dir: " << repo->getGitDir() << endl;
+	}
 
 
 	const string command = argv[1];
@@ -53,22 +47,8 @@ int main(int argc, char *argv[])
 
 		rm.create(initPath);
 	}
-	else if (command == "status")
-	{
-		try
-		{
-			auto repo = rm.findRepo();
-			cout << "work tree: " << repo->getWorkTree() << "\tgit dir: " << repo->getGitDir() << endl;
-		} catch (const std::exception &e)
-		{
-			cout << "Error: " << e.what() << endl;
-		}
-	}
 	else if (command == "cat-file")
 	{
-		auto repo = rm.findRepo();
-		string object = argv[2];
-		auto obj = ObjectManager::readObject(repo, object);
-		cout << "obj data: " << obj->serialize() << endl;
+
 	}
 }
